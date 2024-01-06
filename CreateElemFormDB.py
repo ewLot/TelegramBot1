@@ -1,61 +1,44 @@
 import sqlite3
 
-#Создание бд
-DateBase = sqlite3.connect("DateBaseForTelegramBot.sql")
+# Creating a connection to the database
+database = sqlite3.connect("DatabaseForTelegramBot.sql")
 
-#Создание курсора(выполняет запросы к БД(SELECT, CREATE, INSERT...))
-cursor = DateBase.cursor()
+# Creating a cursor to execute queries
+cursor = database.cursor()
 
-async def Create
+# Function to create tables
+async def create_tables():
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS History (
+            IdRecord INTEGER REFERENCES Record(Id) ON UPDATE CASCADE,
+            IdStudent INTEGER REFERENCES User(Id) ON UPDATE CASCADE,
+            Data VARCHAR(12),
+            Time VARCHAR(10)
+        )
+    """)
 
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS User (
+            Id INTEGER,
+            FIO VARCHAR(100),
+            PhoneNumber VARCHAR(12),
+            NumberRoom INTEGER,
+            Password varchar(32)
+        )
+    """)
 
-cursor.execute("")
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS Record (
+            Id INTEGER,
+            NumberWashingMachine INTEGER
+        )
+    """)
 
+# Other functions and code related to database operations can be added here
 
+# Function call to create tables (you'd call this function at an appropriate time)
+# await create_tables()
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# cursor.execute("Create TABLE History ("
-#             "IdRecord INTEGER REFERENCES Record(Id) ON UPDATE CASCADE,"
-#             "IdStudent INTEGER REFERENCES User(Id) ON UPDATE CASCADE,"
-#             "Data VARCHAR(12),"
-#             "Time VARCHAR(10))")
-#
-#
-# cursor.execute("CREATE TABLE User ("
-#             "Id INTEGER,"
-#             "FIO VARCHAR(100),"
-#             "PhoneNumber VARCHAR(12),"
-#             "NumberRoom INTEGER,"
-#             "Password varchar(32))")
-#
-# cursor.execute("CREATE TABLE Record ("
-#             "Id INTEGER,"
-#             "NumberWashingMachine INTEGER)")
-
-
-
+# Committing changes and closing the database connection (consider doing this when you're done)
+# database.commit()
+# database.close()
