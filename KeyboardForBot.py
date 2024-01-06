@@ -1,14 +1,15 @@
-from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, ReplyKeyboardRemove
+from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 
-keyboard = ReplyKeyboardMarkup(resize_keyboard=True,        # "Сжимает" клавиатуру под размеры интерфейса пользователя
-                               #one_time_keyboard=True       # Скрывает клавиатуру после нажатия кнопки
-                               )
+# Function to create a keyboard with specified buttons
+def create_keyboard(*buttons):
+    keyboard = ReplyKeyboardMarkup(resize_keyboard=True)
+    for button_text in buttons:
+        button = KeyboardButton(button_text)
+        keyboard.add(button)
+    return keyboard
 
-button1 = KeyboardButton('/help')
-button2 = KeyboardButton('/description')
-button3 = KeyboardButton('/LogIn')
+# List of buttons
+button_texts = ['/help', '/description', '/LogIn']
 
-
-
-keyboard.add(button1, button2)
-keyboard.add(button3)
+# Creating the keyboard using the function
+keyboard = create_keyboard(*button_texts)
